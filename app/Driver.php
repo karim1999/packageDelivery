@@ -2,15 +2,18 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
 use Laravel\Passport\HasApiTokens;
 
-class User extends Authenticatable
+class Driver extends Authenticatable
 {
+    //
     use Billable, HasApiTokens, Notifiable;
+
+    protected $guard = 'drivers';
 
     /**
      * The attributes that are mass assignable.
@@ -39,14 +42,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function drivers()
+    public function users()
     {
-        return $this->belongsToMany('App\Driver')->using('App\UserDriver')->withPivot(['status'])->withTimestamps();
+        return $this->belongsToMany('App\User')->using('App\UserDriver')->withPivot(['status'])->withTimestamps();
     }
 
     public function packages()
     {
-        return $this->hasMany('App\Package');
+        return $this->belongsToMany('App\Package')->using('App\DriverPackage')->withPivot(['status'])->withTimestamps();
     }
 
 }
