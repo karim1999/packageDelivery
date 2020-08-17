@@ -15,4 +15,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+})->middleware('guest');
+
+Auth::routes();
+
+Route::middleware(['auth'])->group(function (){
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/portal', 'PaymentController@portal')->name('portal');
+    Route::get('/oauth', 'OauthController@index')->name('oauth');
+    Route::resource('/payment_methods', 'PaymentMethodController');
+    Route::get('/subscribe/{price_id}', 'SubscribeController@subscribe')->name('subscribe');
 });

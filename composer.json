@@ -15,7 +15,8 @@
         "laravel/cashier": "^12.2",
         "laravel/framework": "^7.24",
         "laravel/passport": "^9.3",
-        "laravel/tinker": "^2.0"
+        "laravel/tinker": "^2.0",
+        "laravel/ui": "^2.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.4",
