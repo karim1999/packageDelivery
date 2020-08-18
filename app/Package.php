@@ -14,7 +14,7 @@ class Package extends Model
 
     public function drivers()
     {
-        return $this->belongsToMany('App\Driver')->using('App\DriverPackage')->withPivot(['status'])->withTimestamps();
+        return $this->belongsToMany('App\Driver', 'driver_packages')->using('App\DriverPackage')->withPivot(['status'])->withTimestamps();
     }
 
     public function addressFrom()

@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Home')
 
 @section('content')
 <div class="container">
@@ -14,7 +15,7 @@
 
                 <div class="card-body">
                     @if (auth()->user()->subscribed('default'))
-
+                        You can access the dashboard from here <a target="_blank" href="{{route('dashboard.home')}}">{{route('dashboard.home')}}</a>
                     @else
                         You need  to subscribe to a plan to access the dashboard
                     @endif

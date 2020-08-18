@@ -41,7 +41,11 @@ class User extends Authenticatable
 
     public function drivers()
     {
-        return $this->belongsToMany('App\Driver')->using('App\UserDriver')->withPivot(['status'])->withTimestamps();
+        return $this->belongsToMany('App\Driver', 'user_drivers')->using('App\UserDriver')->withPivot(['status'])->withTimestamps();
+    }
+    public function addresses()
+    {
+        return $this->hasMany('App\Address');
     }
 
     public function packages()

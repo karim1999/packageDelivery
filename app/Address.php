@@ -19,4 +19,13 @@ class Address extends Model
     {
         return $this->belongsTo('App\State');
     }
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+    public function getAddressFormatAttribute()
+    {
+        return $this->street.", ".$this->city.", ".$this->state->name.", ".$this->country->name.", ".$this->postal_code;
+    }
+
 }

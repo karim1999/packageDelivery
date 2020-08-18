@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('home');
 })->middleware('guest');
 
 Auth::routes();
@@ -25,4 +25,13 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/oauth', 'OauthController@index')->name('oauth');
     Route::resource('/payment_methods', 'PaymentMethodController');
     Route::get('/subscribe/{price_id}', 'SubscribeController@subscribe')->name('subscribe');
+    Route::middleware(['subscribed'])->prefix('dashboard')->name('dashboard.')->group(function (){
+        Route::get('/', 'dashboard\HomeController@index')->name('home');
+        Route::resource('/package', 'dashboard\PackageController');
+        Route::resource('/driver', 'dashboard\DriverController');
+        Route::resource('/customer', 'dashboard\CustomerController');
+        Route::resource('/address', 'dashboard\AddressController');
+        Route::resource('/integration', 'dashboard\IntegrationController');
+        Route::resource('/setting', 'dashboard\SettingController');
+    });
 });
