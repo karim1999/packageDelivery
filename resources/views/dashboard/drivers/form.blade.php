@@ -21,6 +21,16 @@
                     @endisset
                     @csrf
                     <div class="card-body">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <div class="form-group">
                             <label>Full Name:</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name', $driver->name) }}" placeholder="Enter full name"/>

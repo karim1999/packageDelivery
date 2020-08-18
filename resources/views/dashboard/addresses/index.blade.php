@@ -49,7 +49,7 @@
                             @else
                                 <th>
                                     <a target="_blank" href="http://www.google.com/maps/place/{{$address->latitude}},{{$address->longitude}}">
-                                        {{$address->name}} ({{$address->latitude}}, {{$address->longitude}})
+                                        {{$address->address_format}}
                                     </a>
                                 </th>
                             @endif

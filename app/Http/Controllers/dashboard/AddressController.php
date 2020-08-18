@@ -43,6 +43,35 @@ class AddressController extends Controller
         ]);
     }
 
+    public function verifyAddress(Request $request, $address){
+        $validatedData = $request->validate([
+            'type' => 'required|in:Map,Manual',
+            'country' => 'required_if:type,Manual|integer|exists:countries,id',
+            'state' => 'required_if:type,Manual|integer|exists:states,id',
+            'city' => 'required_if:type,Manual',
+            'address' => 'required_if:type,Manual',
+            'postal_code' => 'required_if:type,Manual|integer',
+            'latitude' => 'required_if:type,Map',
+            'longitude' => 'required_if:type,Map',
+            'name' => 'required_if:type,Map',
+        ]);
+        $type= $request->input('type');
+        $address->type= $type;
+        $address->user_id= auth()->user()->id;
+        if($type == "Manual"){
+            $address->country_id= $request->input('country');
+            $address->state_id= $request->input('state');
+            $address->city= $request->input('city');
+            $address->street= $request->input('address');
+            $address->postal_code= $request->input('postal_code');
+        }else{
+            $address->latitude= $request->input('latitude');
+            $address->longitude= $request->input('longitude');
+            $address->name= $request->input('name');
+        }
+        return $address;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -72,32 +101,8 @@ class AddressController extends Controller
     public function store(Request $request)
     {
         //
-        $validatedData = $request->validate([
-            'type' => 'required|in:Map,Manual',
-            'country' => 'required_if:type,Manual|integer|exists:countries,id',
-            'state' => 'required_if:type,Manual|integer|exists:states,id',
-            'city' => 'required_if:type,Manual',
-            'address' => 'required_if:type,Manual',
-            'postal_code' => 'required_if:type,Manual|integer',
-            'latitude' => 'required_if:type,Map',
-            'longitude' => 'required_if:type,Map',
-            'name' => 'required_if:type,Map',
-        ]);
-        $type= $request->input('type');
         $address= new Address();
-        $address->type= $type;
-        $address->user_id= auth()->user()->id;
-        if($type == "Manual"){
-            $address->country_id= $request->input('country');
-            $address->state_id= $request->input('state');
-            $address->city= $request->input('city');
-            $address->street= $request->input('address');
-            $address->postal_code= $request->input('postal_code');
-        }else{
-            $address->latitude= $request->input('latitude');
-            $address->longitude= $request->input('longitude');
-            $address->name= $request->input('name');
-        }
+        $address= $this->verifyAddress($request, $address);
 
         $address->save();
         return redirect()->route('dashboard.address.index')->with("status", "An address was added successfully.");
@@ -143,31 +148,7 @@ class AddressController extends Controller
     public function update(Request $request, Address $address)
     {
         //
-        $validatedData = $request->validate([
-            'type' => 'required|in:Map,Manual',
-            'country' => 'required_if:type,Manual|integer|exists:countries,id',
-            'state' => 'required_if:type,Manual|integer|exists:states,id',
-            'city' => 'required_if:type,Manual',
-            'address' => 'required_if:type,Manual',
-            'postal_code' => 'required_if:type,Manual|integer',
-            'latitude' => 'required_if:type,Map',
-            'longitude' => 'required_if:type,Map',
-            'name' => 'required_if:type,Map',
-        ]);
-        $type= $request->input('type');
-        $address->type= $type;
-        if($type == "Manual"){
-            $address->country_id= $request->input('country');
-            $address->state_id= $request->input('state');
-            $address->city= $request->input('city');
-            $address->street= $request->input('address');
-            $address->postal_code= $request->input('postal_code');
-        }else{
-            $address->latitude= $request->input('latitude');
-            $address->longitude= $request->input('longitude');
-            $address->name= $request->input('name');
-        }
-
+        $this->verifyAddress($request, $address);
         $address->save();
         return redirect()->route('dashboard.address.index')->with("status", "The address was edited successfully.");
     }

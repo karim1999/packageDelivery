@@ -9,7 +9,7 @@ class Customer extends Model
     //
     public function address()
     {
-        return $this->morphOne('App\Address', 'addressable');
+        return $this->belongsTo('App\Address');
     }
     public function user()
     {

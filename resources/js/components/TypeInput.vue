@@ -4,7 +4,7 @@
             <label class="kt-option">
                 <span class="kt-option__control">
                     <span class="kt-radio">
-                        <input type="radio" name="type" :value="option.value" v-model="value">
+                        <input type="radio" :name="name" :value="option.value" v-model="value">
                         <span></span>
                     </span>
                 </span>
@@ -28,7 +28,8 @@
         name: "TypeInput",
         props: {
             options: Array,
-            default: String
+            default: String,
+            name: String
         },
         data(){
             return {
@@ -36,6 +37,7 @@
             }
         },
         created(){
+            console.log(this.default)
             this.$emit('set-value', this.default)
         },
         watch: {

@@ -1,6 +1,14 @@
 window.Vue = require('vue');
 window.axios = require('axios');
 
+import * as GmapVue from 'gmap-vue'
+Vue.use(GmapVue, {
+    load: {
+        key: 'AIzaSyAM8NrtdULC5dBtGjLEpy8oTrUlK7lEKkE',
+        libraries: 'places', // This is required if you use the Autocomplete plugin
+    },
+    installComponents: true
+})
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

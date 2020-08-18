@@ -1,21 +1,26 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Drivers')
+@section('title', 'Customers')
 @section('content')
     <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
+        @if (session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
+        @endif
         <div class="kt-portlet kt-portlet--mobile">
             <div class="kt-portlet__head kt-portlet__head--lg">
                 <div class="kt-portlet__head-label"><span class="kt-portlet__head-icon"><i class="kt-font-brand flaticon2-line-chart"></i></span>
                     <h3 class="kt-portlet__head-title">
-                        Drivers
+                        Customers
                     </h3>
                 </div>
                 <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-wrapper">
                         <div class="kt-portlet__head-actions">
-                            <a href="{{route('dashboard.driver.create')}}" class="btn btn-brand btn-elevate btn-icon-sm">
+                            <a href="{{route('dashboard.customer.create')}}" class="btn btn-brand btn-elevate btn-icon-sm">
                                 <i class="la la-plus"></i>
-                                New Driver
+                                New Customer
                             </a>
                         </div>
                     </div>
@@ -28,32 +33,46 @@
                     <thead>
                     <tr>
                         <th>Record ID</th>
-                        <th>Order ID</th>
-                        <th>Country</th>
-                        <th>Ship City</th>
-                        <th>Ship Address</th>
-                        <th>Company Agent</th>
-                        <th>Company Name</th>
-                        <th>Ship Date</th>
-                        <th>Status</th>
-                        <th>Type</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Created At</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>61715-075</td>
-                        <td>China</td>
-                        <td>Tieba</td>
-                        <td>746 Pine View Junction</td>
-                        <td>Nixie Sailor</td>
-                        <td>Gleichner, Ziemann and Gutkowski</td>
-                        <td>2/12/2018</td>
-                        <td>3</td>
-                        <td>2</td>
-                        <td nowrap></td>
-                    </tr>
+                    @foreach($customers as $customer)
+                        <tr>
+                            <th>{{$customer->id}}</th>
+                            <th>{{$customer->name}}</th>
+                            <th>{{$customer->email}}</th>
+                            <th>{{$customer->phone}}</th>
+                            @if ($customer->address->type == "Manual")
+                                <th>{{$customer->address->address_format}}</th>
+                            @else
+                                <th>
+                                    <a target="_blank" href="http://www.google.com/maps/place/{{$customer->address->latitude}},{{$customer->address->longitude}}">
+                                        {{$customer->address->address_format}}
+                                    </a>
+                                </th>
+                            @endif
+                            <th>{{$customer->created_at}}</th>
+                            <th>
+                                <a href="{{route('dashboard.customer.edit', $customer->id)}}" class="btn btn-sm btn-icon btn-primary">
+                                    <i class="fa fa-pen"></i>
+                                </a>
+                                <a onclick="event.preventDefault();
+                                                     document.getElementById('customer-delete-{{$customer->id}}').submit();"href="{{route('dashboard.customer.destroy', $customer->id)}}" class="btn btn-sm btn-icon btn-danger">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                                <form id="customer-delete-{{$customer->id}}" action="{{route('dashboard.customer.destroy', $customer->id)}}" method="POST" style="display: none;">
+                                    @method('DELETE')
+                                    @csrf
+                                </form>
+                            </th>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
 

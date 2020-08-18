@@ -53,7 +53,7 @@
                                     <i class="fa fa-pen"></i>
                                 </a>
                                 <a onclick="event.preventDefault();
-                                                     document.getElementById('driver-delete-'{{$driver->id}}).submit();"href="{{route('dashboard.driver.destroy', $driver->id)}}" class="btn btn-sm btn-icon btn-danger">
+                                                     document.getElementById('driver-delete-{{$driver->id}}').submit();"href="{{route('dashboard.driver.destroy', $driver->id)}}" class="btn btn-sm btn-icon btn-danger">
                                     <i class="fa fa-times"></i>
                                 </a>
                                 <form id="driver-delete-{{$driver->id}}" action="{{route('dashboard.driver.destroy', $driver->id)}}" method="POST" style="display: none;">

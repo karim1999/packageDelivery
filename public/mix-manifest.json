@@ -1,7 +1,9 @@
 {
-    "/js/address_type.js": "/js/address_type.js",
+    "/js/addressForm.js": "/js/addressForm.js",
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/js/auth.js": "/js/auth.js",
+    "/js/customerForm.js": "/js/customerForm.js",
+    "/js/packageForm.js": "/js/packageForm.js",
     "/js/payment_method.js": "/js/payment_method.js"
 }

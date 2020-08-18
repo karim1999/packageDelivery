@@ -25,7 +25,11 @@ class Address extends Model
     }
     public function getAddressFormatAttribute()
     {
-        return $this->street.", ".$this->city.", ".$this->state->name.", ".$this->country->name.", ".$this->postal_code;
+        if ($this->type == "Manual"){
+            return $this->street.", ".$this->city.", ".$this->state->name.", ".$this->country->name.", ".$this->postal_code;
+        }else{
+            return $this->name." (".$this->latitude.", ".$this->longitude.")";
+        }
     }
 
 }

@@ -23,6 +23,10 @@ class CreateCustomersTable extends Migration
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->unsignedBigInteger('address_id');
+            $table->foreign('address_id')->references('id')
+                ->on('addresses')
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

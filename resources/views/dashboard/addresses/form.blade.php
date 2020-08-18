@@ -13,7 +13,7 @@
                     </h3>
                 </div>
             </div>
-            <div class="kt-portlet__body kt-portlet__body--fit" id="addressType">
+            <div class="kt-portlet__body kt-portlet__body--fit" id="addressForm">
                 <form class="form" method="post"
                       action="{{isset($address->id) ? route('dashboard.address.update', $address->id) : route('dashboard.address.store')}}">
                     @isset($address->id)
@@ -23,13 +23,22 @@
                     @endisset
                     @csrf
                     <div class="card-body">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <div class="form-group form-group-marginless">
                             <label>Choose Address Type:</label>
-                            <type-input @set-value="setValue" default="{{old('type') ? old('type') : ($address->type ? $address->type : "Manual") }}" :options='@json($addressTypes)'></type-input>
+                            <type-input name="type" @set-value="setValue" default="{{old('type') ? old('type') : ($address->type ? $address->type : "Manual") }}" :options='@json($addressTypes)'></type-input>
                         </div>
                         <div class="separator separator-dashed my-5"></div>
 
-                        <div v-show="value == 'Manual'" class="form-group form-group-marginless">
+                        <div v-if="value == 'Manual'" class="form-group form-group-marginless">
                             <div class="form-group">
                                 <label>Country: </label>
                                 <select required id="countrySelect" name="country" class="form-control @error('country') is-invalid @enderror">
@@ -89,7 +98,7 @@
 
                             <div class="separator separator-dashed my-5"></div>
                         </div>
-                        <div v-show="value == 'Map'" class="form-group form-group-marginless">
+                        <div v-else class="form-group form-group-marginless">
                             <div class="form-group">
                                 <label>Name:</label>
                                 <input required type="text" class="form-control @error('name') is-invalid @enderror"
@@ -123,7 +132,7 @@
 
 @push('scripts')
     <script src="{{asset('js/app.js')}}"></script>
-    <script src="{{asset('js/address_type.js')}}"></script>
+    <script src="{{asset('js/addressForm.js')}}"></script>
     @if ($address->latitude)
         <script>
             window.onload = function() {

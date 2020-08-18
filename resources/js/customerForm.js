@@ -1,21 +1,14 @@
-import * as GmapVue from 'gmap-vue'
-Vue.use(GmapVue, {
-    load: {
-        key: 'AIzaSyAM8NrtdULC5dBtGjLEpy8oTrUlK7lEKkE',
-        libraries: 'places', // This is required if you use the Autocomplete plugin
-    },
-    installComponents: true
-})
 import TypeInput from "./components/TypeInput";
 
 const stripeForm = new Vue({
-    el: '#addressType',
+    el: '#customerForm',
     components: {
         TypeInput
     },
     data(){
         return {
             value: "Manual",
+            how: "List",
             center: {
                 lat: 10.0,
                 lng: 10.0
@@ -46,6 +39,9 @@ const stripeForm = new Vue({
     methods: {
         setValue(value){
             this.value= value
+        },
+        setHow(value){
+            this.how= value
         },
         gMapFunc(event) {
             this.position.lat = event.lat();
