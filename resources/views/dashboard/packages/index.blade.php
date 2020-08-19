@@ -33,8 +33,11 @@
                     <thead>
                     <tr>
                         <th>Record ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
+                        <th>Description</th>
+                        <th>Weight</th>
+                        <th>Dimensions</th>
+                        <th>From / To</th>
+                        <th>Driver</th>
                         <th>Status</th>
                         <th>Created At</th>
                         <th>Actions</th>
@@ -44,8 +47,19 @@
                     @foreach($packages as $package)
                         <tr>
                             <th>{{$package->id}}</th>
-                            <th>{{$package->name}}</th>
-                            <th>{{$package->email}}</th>
+                            <th>{{$package->description}}</th>
+                            <th>{{$package->weight}}</th>
+                            <th>{{$package->dimensions}}</th>
+                            <th>
+                                <p>
+                                    From >> {!! $package->addressFrom->addressFormatWithLink !!}
+                                </p>
+                                <br>
+                                <p>
+                                    To >> {!! $package->addressTo->addressFormatWithLink !!}
+                                </p>
+                            </th>
+                            <th>{{$package->currentDriver->name}}</th>
                             <th>{{$package->status}}</th>
                             <th>{{$package->created_at}}</th>
                             <th>

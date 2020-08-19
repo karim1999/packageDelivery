@@ -84,7 +84,7 @@
             <div class="kt-aside-menu-wrapper kt-grid__item kt-grid__item--fluid" id="kt_aside_menu_wrapper">
                 <div id="kt_aside_menu" class="kt-aside-menu " data-ktmenu-vertical="1" data-ktmenu-scroll="1" data-ktmenu-dropdown-timeout="500">
                     <ul class="kt-menu__nav ">
-                        <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('dashboard.home')}}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-home"></i><span class="kt-menu__link-text">Dashboard</span></a></li>
+                        <li class="kt-menu__item active" aria-haspopup="true"><a href="{{route('dashboard.home')}}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-home"></i><span class="kt-menu__link-text">Dashboard</span></a></li>
                         <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover"><a href="javascript:;" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-icon flaticon2-open-box"></i><span class="kt-menu__link-text">Packages</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
                             <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
                                 <ul class="kt-menu__subnav">
@@ -274,6 +274,11 @@
 <!--begin::Page Scripts(used by this page) -->
 <script src="{{asset('assets/js/pages/dashboard.js')}}" type="text/javascript"></script>
 
+<script>
+    var item= $('a[href="{{Request::fullUrl()}}"]').parent()
+    item.addClass("kt-menu__item--active")
+    item.parent().parent().parent().addClass('kt-menu__item--open');
+</script>
 @stack('scripts')
 <!--end::Page Scripts -->
 </body>

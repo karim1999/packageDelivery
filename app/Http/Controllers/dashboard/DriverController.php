@@ -16,9 +16,14 @@ class DriverController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $drivers= auth()->user()->drivers;
+        if($request->query('status')){
+            $drivers= auth()->user()->drivers()->where('drivers.status', $request->query('status'))->get();
+        }else{
+            $drivers= auth()->user()->drivers;
+        }
+
         return view('dashboard.drivers.index', [
             "drivers" => $drivers
         ]);

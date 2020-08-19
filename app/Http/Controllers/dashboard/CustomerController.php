@@ -62,6 +62,7 @@ class CustomerController extends Controller
         }else{
             $address= new Address();
             $address= $this->address->verifyAddress($request, $address);
+            $address->user_id= auth()->user()->id;
             $address->save();
             $customer->address_id= $address->id;
         }

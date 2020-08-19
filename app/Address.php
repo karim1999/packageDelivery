@@ -31,5 +31,13 @@ class Address extends Model
             return $this->name." (".$this->latitude.", ".$this->longitude.")";
         }
     }
+    public function getAddressFormatWithLinkAttribute()
+    {
+        if ($this->type == "Manual"){
+            return $this->getAddressFormatAttribute();
+        }else{
+            return '<a target="_blank" href="http://www.google.com/maps/place/'.$this->latitude.','.$this->longitude.'">'.$this->getAddressFormatAttribute().'</a>';
+        }
+    }
 
 }

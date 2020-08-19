@@ -8,6 +8,7 @@ use App\Customer;
 use App\Http\Controllers\Controller;
 use App\Package;
 use App\State;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -30,10 +31,17 @@ class PackageController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $packages= auth()->user()->packages;
+        if($request->query('status')){
+            $packages= auth()->user()->packages()->whereHas('drivers', function (Builder $query) use ($request) {
+                $query->where('driver_packages.status', $request->query('status'));
+            })->get();
+        }else{
+            $packages= auth()->user()->packages;
+        }
+
         return view('dashboard.packages.index', [
             "packages"=> $packages
         ]);
