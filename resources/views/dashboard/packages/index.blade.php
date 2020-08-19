@@ -1,7 +1,13 @@
 @extends('layouts.dashboard')
+
 @section('title', 'Packages')
 @section('content')
     <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
+        @if (session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
+        @endif
         <div class="kt-portlet kt-portlet--mobile">
             <div class="kt-portlet__head kt-portlet__head--lg">
                 <div class="kt-portlet__head-label"><span class="kt-portlet__head-icon"><i class="kt-font-brand flaticon2-line-chart"></i></span>
@@ -27,32 +33,36 @@
                     <thead>
                     <tr>
                         <th>Record ID</th>
-                        <th>Order ID</th>
-                        <th>Country</th>
-                        <th>Ship City</th>
-                        <th>Ship Address</th>
-                        <th>Company Agent</th>
-                        <th>Company Name</th>
-                        <th>Ship Date</th>
+                        <th>Name</th>
+                        <th>Email</th>
                         <th>Status</th>
-                        <th>Type</th>
+                        <th>Created At</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>61715-075</td>
-                        <td>China</td>
-                        <td>Tieba</td>
-                        <td>746 Pine View Junction</td>
-                        <td>Nixie Sailor</td>
-                        <td>Gleichner, Ziemann and Gutkowski</td>
-                        <td>2/12/2018</td>
-                        <td>3</td>
-                        <td>2</td>
-                        <td nowrap></td>
-                    </tr>
+                    @foreach($packages as $package)
+                        <tr>
+                            <th>{{$package->id}}</th>
+                            <th>{{$package->name}}</th>
+                            <th>{{$package->email}}</th>
+                            <th>{{$package->status}}</th>
+                            <th>{{$package->created_at}}</th>
+                            <th>
+                                <a href="{{route('dashboard.package.edit', $package->id)}}" class="btn btn-sm btn-icon btn-primary">
+                                    <i class="fa fa-pen"></i>
+                                </a>
+                                <a onclick="event.preventDefault();
+                                                     document.getElementById('package-delete-{{$package->id}}').submit();"href="{{route('dashboard.package.destroy', $package->id)}}" class="btn btn-sm btn-icon btn-danger">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                                <form id="package-delete-{{$package->id}}" action="{{route('dashboard.package.destroy', $package->id)}}" method="POST" style="display: none;">
+                                    @method('DELETE')
+                                    @csrf
+                                </form>
+                            </th>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
 

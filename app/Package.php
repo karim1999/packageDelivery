@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Plank\Metable\Metable;
 
 class Package extends Model
 {
+    use Metable;
     //
     public function user()
     {
@@ -19,12 +21,12 @@ class Package extends Model
 
     public function addressFrom()
     {
-        return $this->morphOne('App\Address', 'addressable');
+        return $this->belongsTo('App\Address', 'address_from');
     }
 
     public function addressTo()
     {
-        return $this->morphOne('App\Address', 'addressable');
+        return $this->belongsTo('App\Address', 'address_to');
     }
 
 

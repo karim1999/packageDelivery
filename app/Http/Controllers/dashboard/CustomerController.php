@@ -46,6 +46,31 @@ class CustomerController extends Controller
         ]);
     }
 
+    public function verifyCustomer(Request $request, Customer $customer){
+        $validatedData = $request->validate([
+            'how' => 'required|in:List,New',
+            'email' => 'required',
+            'name' => 'required',
+            'phone' => '',
+            'address_id'=> 'required_if:how,List|exists:addresses,id',
+            'type' => 'required_if:how,New|in:Map,Manual',
+        ]);
+
+        $how= $request->input('how');
+        if($how == "List"){
+            $customer->address_id= $request->input('address_id');
+        }else{
+            $address= new Address();
+            $address= $this->address->verifyAddress($request, $address);
+            $address->save();
+            $customer->address_id= $address->id;
+        }
+
+        $customer->name= $request->input('name');
+        $customer->email= $request->input('email');
+        $customer->phone= $request->input('phone');
+        return $customer;
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -77,30 +102,8 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $validatedData = $request->validate([
-            'how' => 'required|in:List,New',
-            'email' => 'required',
-            'name' => 'required',
-            'phone' => '',
-            'address_id'=> 'required_if:how,List|exists:addresses,id',
-            'type' => 'required_if:how,New|in:Map,Manual',
-        ]);
-
-        $how= $request->input('how');
         $customer= new Customer();
-        if($how == "List"){
-            $customer->address_id= $request->input('address_id');
-        }else{
-            $address= new Address();
-            $address= $this->address->verifyAddress($request, $address);
-            $address->save();
-            $customer->address_id= $address->id;
-        }
-
-        $customer->name= $request->input('name');
-        $customer->email= $request->input('email');
-        $customer->phone= $request->input('phone');
+        $customer= $this->verifyCustomer($request, $customer);
         $customer->user_id= auth()->user()->id;
         $customer->save();
         return redirect()->route('dashboard.customer.index')->with("status", "A customer was added successfully.");
@@ -149,13 +152,7 @@ class CustomerController extends Controller
     public function update(Request $request, Customer $customer)
     {
         //
-        $validatedData = $request->validate([
-            'email' => 'required',
-            'name' => 'required',
-        ]);
-        $customer->name= $request->input('name');
-        $customer->email= $request->input('email');
-
+        $customer= $this->verifyCustomer($request, $customer);
         $customer->save();
         return redirect()->route('dashboard.customer.index')->with("status", "the customer was edited successfully.");
     }

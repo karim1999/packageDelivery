@@ -418,18 +418,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_TypeInput__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/TypeInput */ "./resources/js/components/TypeInput.vue");
 
 var stripeForm = new Vue({
-  el: '#addressType',
+  el: '#packageForm',
   components: {
     TypeInput: _components_TypeInput__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
     return {
-      value: "Manual",
-      center: {
+      value_from: "Manual",
+      how_from: "List",
+      value_to: "Manual",
+      how_to: "List",
+      center_from: {
         lat: 10.0,
         lng: 10.0
       },
-      position: {
+      center_to: {
+        lat: 10.0,
+        lng: 10.0
+      },
+      position_from: {
+        lat: 10.0,
+        lng: 10.0
+      },
+      position_to: {
         lat: 10.0,
         lng: 10.0
       }
@@ -446,21 +457,39 @@ var stripeForm = new Vue({
 
 
     navigator.geolocation.getCurrentPosition(function (pos) {
-      _this.position.lat = pos.coords.latitude;
-      _this.center.lat = pos.coords.latitude;
-      _this.position.lng = pos.coords.longitude;
-      _this.center.lng = pos.coords.longitude;
+      _this.position_from.lat = pos.coords.latitude;
+      _this.center_from.lat = pos.coords.latitude;
+      _this.position_from.lng = pos.coords.longitude;
+      _this.center_from.lng = pos.coords.longitude;
+      _this.position_to.lat = pos.coords.latitude;
+      _this.center_to.lat = pos.coords.latitude;
+      _this.position_to.lng = pos.coords.longitude;
+      _this.center_to.lng = pos.coords.longitude;
     }, function (err) {
       console.log('Geolocation is not available.');
     });
   },
   methods: {
-    setValue: function setValue(value) {
-      this.value = value;
+    setValue_from: function setValue_from(value) {
+      this.value_from = value;
     },
-    gMapFunc: function gMapFunc(event) {
-      this.position.lat = event.lat();
-      this.position.lng = event.lng();
+    setHow_from: function setHow_from(value) {
+      this.how_from = value;
+    },
+    gMapFunc_from: function gMapFunc_from(event) {
+      this.position_from.lat = event.lat();
+      this.position_from.lng = event.lng();
+      console.log(event.lat(), event.lng());
+    },
+    setValue_to: function setValue_to(value) {
+      this.value_to = value;
+    },
+    setHow_to: function setHow_to(value) {
+      this.how_to = value;
+    },
+    gMapFunc_to: function gMapFunc_to(event) {
+      this.position_to.lat = event.lat();
+      this.position_to.lng = event.lng();
       console.log(event.lat(), event.lng());
     }
   }

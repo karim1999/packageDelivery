@@ -1,18 +1,29 @@
 import TypeInput from "./components/TypeInput";
 
 const stripeForm = new Vue({
-    el: '#addressType',
+    el: '#packageForm',
     components: {
         TypeInput
     },
     data(){
         return {
-            value: "Manual",
-            center: {
+            value_from: "Manual",
+            how_from: "List",
+            value_to: "Manual",
+            how_to: "List",
+            center_from: {
                 lat: 10.0,
                 lng: 10.0
             },
-            position: {
+            center_to: {
+                lat: 10.0,
+                lng: 10.0
+            },
+            position_from: {
+                lat: 10.0,
+                lng: 10.0
+            },
+            position_to: {
                 lat: 10.0,
                 lng: 10.0
             }
@@ -27,21 +38,39 @@ const stripeForm = new Vue({
 
         // get position
         navigator.geolocation.getCurrentPosition(pos => {
-            this.position.lat = pos.coords.latitude;
-            this.center.lat = pos.coords.latitude;
-            this.position.lng = pos.coords.longitude;
-            this.center.lng = pos.coords.longitude;
+            this.position_from.lat = pos.coords.latitude;
+            this.center_from.lat = pos.coords.latitude;
+            this.position_from.lng = pos.coords.longitude;
+            this.center_from.lng = pos.coords.longitude;
+            this.position_to.lat = pos.coords.latitude;
+            this.center_to.lat = pos.coords.latitude;
+            this.position_to.lng = pos.coords.longitude;
+            this.center_to.lng = pos.coords.longitude;
         }, err => {
             console.log('Geolocation is not available.')
         })
     },
     methods: {
-        setValue(value){
-            this.value= value
+        setValue_from(value){
+            this.value_from= value
         },
-        gMapFunc(event) {
-            this.position.lat = event.lat();
-            this.position.lng = event.lng();
+        setHow_from(value){
+            this.how_from= value
+        },
+        gMapFunc_from(event) {
+            this.position_from.lat = event.lat();
+            this.position_from.lng = event.lng();
+            console.log(event.lat(), event.lng())
+        },
+        setValue_to(value){
+            this.value_to= value
+        },
+        setHow_to(value){
+            this.how_to= value
+        },
+        gMapFunc_to(event) {
+            this.position_to.lat = event.lat();
+            this.position_to.lng = event.lng();
             console.log(event.lat(), event.lng())
         },
     }

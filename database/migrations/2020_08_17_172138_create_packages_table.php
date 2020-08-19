@@ -19,9 +19,20 @@ class CreatePackagesTable extends Migration
             $table->foreign('user_id')->references('id')
                 ->on('users')
                 ->onDelete('cascade');
-            $table->string('name');
-            $table->morphs('from');
-            $table->morphs('to');
+            $table->string('name')->nullable();
+            $table->string('description')->nullable();
+            $table->integer('weight')->nullable();
+            $table->integer('width')->nullable();
+            $table->integer('height')->nullable();
+            $table->integer('length')->nullable();
+            $table->unsignedBigInteger('address_from');
+            $table->foreign('address_from')->references('id')
+                ->on('addresses')
+                ->onDelete('cascade');
+            $table->unsignedBigInteger('address_to');
+            $table->foreign('address_to')->references('id')
+                ->on('addresses')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
