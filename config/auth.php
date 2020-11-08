@@ -41,8 +41,8 @@ return [
             'provider' => 'users',
         ],
         'drivers' => [
-            'driver' => 'session',
-            'provider' => 'users',
+            'driver' => 'jwt',
+            'provider' => 'drivers',
         ],
 
         'api' => [
@@ -77,7 +77,7 @@ return [
 
         'drivers' => [
             'driver' => 'eloquent',
-            'table' => App\Driver::class,
+            'model' => App\Driver::class,
         ],
     ],
 
