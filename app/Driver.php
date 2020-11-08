@@ -7,12 +7,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
 use Laravel\Passport\HasApiTokens;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class Driver extends Authenticatable implements JWTSubject
+class Driver extends Authenticatable implements JWTSubject, HasMedia
 {
     //
     use Billable, HasApiTokens, Notifiable;
+    use InteractsWithMedia;
 
     protected $guard = 'drivers';
 
@@ -75,4 +78,10 @@ class Driver extends Authenticatable implements JWTSubject
         return $this->belongsToMany('App\Package', 'driver_packages')->using('App\DriverPackage')->withPivot(['status'])->withTimestamps();
     }
 
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('avatar')
+            ->useFallbackUrl(asset('/assets/user.png'))
+            ->singleFile();
+    }
 }

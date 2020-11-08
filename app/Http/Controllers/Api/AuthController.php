@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * @group  Authentication
@@ -29,10 +30,19 @@ class AuthController extends Controller
      * @bodyParam  email string required The Email of the Driver. Example: karim.elbadry2@gmail.com
      * @bodyParam  password string required The Password of the Driver. Example: karim
      *
+     * @param Request $request
      * @return JsonResponse
      */
-    public function login()
+    public function login(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'password' => 'required',
+            'email' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(["errors" => $validator->errors()], 400);
+        }
         $credentials = request(['email', 'password']);
 
         if (! $token = auth('drivers')->attempt($credentials)) {
@@ -53,7 +63,9 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(auth('drivers')->user());
+        $user= auth('drivers')->user();
+        $user->avatar= $user->getFirstMediaUrl('avatar');
+        return response()->json($user);
     }
 
     /**
