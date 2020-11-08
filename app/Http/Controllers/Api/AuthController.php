@@ -6,6 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
+/**
+ * @group  Authentication
+ *
+ * APIs for Authentication drivers
+ */
 class AuthController extends Controller
 {
     /**
@@ -21,6 +26,9 @@ class AuthController extends Controller
     /**
      * Get a JWT via given credentials.
      *
+     * @bodyParam  email string required The Email of the Driver. Example: karim.elbadry2@gmail.com
+     * @bodyParam  password string required The Password of the Driver. Example: karim
+     *
      * @return JsonResponse
      */
     public function login()
@@ -35,7 +43,11 @@ class AuthController extends Controller
     }
 
     /**
-     * Get the authenticated User.
+     * Get the authenticated Driver.
+     *
+     * @authenticated
+     * @bodyParam  email string required The Email of the Driver. Example: karim.elbadry2@gmail.com
+     * @bodyParam  password string required The Password of the Driver. Example: karim
      *
      * @return JsonResponse
      */
@@ -46,6 +58,8 @@ class AuthController extends Controller
 
     /**
      * Log the user out (Invalidate the token).
+     *
+     * @authenticated
      *
      * @return JsonResponse
      */
@@ -58,6 +72,8 @@ class AuthController extends Controller
 
     /**
      * Refresh a token.
+     *
+     * @authenticated
      *
      * @return JsonResponse
      */
