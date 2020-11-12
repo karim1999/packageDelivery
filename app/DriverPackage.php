@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class DriverPackage extends Pivot
 {
+    protected $table= "driver_packages";
     //
     public $incrementing = true;
 

@@ -39,11 +39,20 @@ Route::group([
 });
 
 Route::group([
-    'prefix' => 'package',
-    'name' => 'package',
+    'prefix' => 'task',
+    'name' => 'task',
     'middleware' => 'jwt.verify'
 ], function ($router) {
-    Route::post('{package}/status/update', 'Api\PackageController@update');
-    Route::get('all', 'Api\PackageController@all');
+    Route::post('{DriverPackage}/status/update', 'Api\TaskController@update');
+    Route::get('all', 'Api\TaskController@all');
 });
+
+//Route::group([
+//    'prefix' => 'package',
+//    'name' => 'package',
+//    'middleware' => 'jwt.verify'
+//], function ($router) {
+//    Route::post('{package}/status/update', 'Api\PackageController@update');
+//    Route::get('all', 'Api\PackageController@all');
+//});
 
