@@ -30,6 +30,8 @@ class CreateAddressesTable extends Migration
             $table->string('city')->nullable();
             $table->string('street')->nullable();
             $table->string('postal_code')->nullable();
+            $table->integer('floor')->default(1);
+            $table->integer('apt')->default(1);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')
                 ->on('users')

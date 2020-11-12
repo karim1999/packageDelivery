@@ -123,9 +123,7 @@ class DriverController extends Controller
             return response()->json(["errors" => $validator->errors()], 400);
         }
 
-        if($request->input('available')){
-            $user->available= $request->input('available');
-        }
+        $user->available= $request->input('available');
 
         $user->save();
 
