@@ -238,7 +238,7 @@ fetch(url, {
     "http://localhost:8000/api/driver/info/update" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"email":"karim.elbadry2@gmail.com","password":"karim","name":"Karim Mahmoud","avatar":"dignissimos","vehicle":"Car."}'
+    -d '{"email":"karim.elbadry2@gmail.com","password":"karim","name":"Karim Mahmoud","avatar":"occaecati","vehicle":"Car."}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL(
     "http://localhost:8000/api/driver/info/update"
@@ -253,7 +253,7 @@ let body = {
     "email": "karim.elbadry2@gmail.com",
     "password": "karim",
     "name": "Karim Mahmoud",
-    "avatar": "dignissimos",
+    "avatar": "occaecati",
     "vehicle": "Car."
 }
 
@@ -425,6 +425,170 @@ fetch(url, {
 </tbody>
 </table>
 <!-- END_73f6f5c1023cafbe8728c9e214794062 -->
+<!-- START_101ae5f3c8ee19464dd615f1817449ff -->
+<h2>Update Tasks status.</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X POST \
+    "http://localhost:8000/api/task/1/status/update" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -d '{"status":"Waiting"}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/task/1/status/update"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "status": "Waiting"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST api/task/{DriverPackage}/status/update</code></p>
+<h4>URL Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>required</td>
+<td>The ID of the Package.</td>
+</tr>
+</tbody>
+</table>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>status</code></td>
+<td>Enum</td>
+<td>optional</td>
+<td>(Waiting,Approved,Rejected,Delivering,Delivered) default(gets all).</td>
+</tr>
+</tbody>
+</table>
+<!-- END_101ae5f3c8ee19464dd615f1817449ff -->
+<!-- START_89ef996cda3c3587f8cc15df8329a27b -->
+<h2>Get Tasks.</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X GET \
+    -G "http://localhost:8000/api/task/all?start_date=MM%2FDD%2FYYYY&amp;end_date=MM%2FDD%2FYYYY&amp;limit=10&amp;sort_by=id&amp;sort_type=ASC&amp;status=Waiting&amp;search=nesciunt" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"</code></pre>
+<pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/task/all"
+);
+
+let params = {
+    "start_date": "MM/DD/YYYY",
+    "end_date": "MM/DD/YYYY",
+    "limit": "10",
+    "sort_by": "id",
+    "sort_type": "ASC",
+    "status": "Waiting",
+    "search": "nesciunt",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "status": "Authorization Token not found"
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET api/task/all</code></p>
+<h4>Query Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>start_date</code></td>
+<td>optional</td>
+<td>Date default(no start date).</td>
+</tr>
+<tr>
+<td><code>end_date</code></td>
+<td>optional</td>
+<td>Date default(no end date).</td>
+</tr>
+<tr>
+<td><code>limit</code></td>
+<td>optional</td>
+<td>Integer the number of results u want default(unlimited).</td>
+</tr>
+<tr>
+<td><code>sort_by</code></td>
+<td>optional</td>
+<td>Enum (id, created_at) default(id).</td>
+</tr>
+<tr>
+<td><code>sort_type</code></td>
+<td>optional</td>
+<td>Enum (ASC, DESC) default(id).</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>optional</td>
+<td>Enum (Waiting,Approved,Rejected,Delivering,Delivered) default(gets all).</td>
+</tr>
+<tr>
+<td><code>search</code></td>
+<td>optional</td>
+<td>string search for a package.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_89ef996cda3c3587f8cc15df8329a27b -->
       </div>
       <div class="dark-box">
                         <div class="lang-selector">

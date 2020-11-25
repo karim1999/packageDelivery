@@ -2,7 +2,7 @@
     "variables": [],
     "info": {
         "name": "PackageDelivery API",
-        "_postman_id": "c40fdf61-c64e-48ed-8fe5-706e971e7fb6",
+        "_postman_id": "345b6169-9a7d-4446-b633-91ea10dc4094",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.0.0\/collection.json"
     },
@@ -151,7 +151,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"email\": \"karim.elbadry2@gmail.com\",\n    \"password\": \"karim\",\n    \"name\": \"Karim Mahmoud\",\n    \"avatar\": \"dignissimos\",\n    \"vehicle\": \"Car.\"\n}"
+                            "raw": "{\n    \"email\": \"karim.elbadry2@gmail.com\",\n    \"password\": \"karim\",\n    \"name\": \"Karim Mahmoud\",\n    \"avatar\": \"occaecati\",\n    \"vehicle\": \"Car.\"\n}"
                         },
                         "description": "",
                         "response": []
@@ -208,6 +208,105 @@
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"available\": true\n}"
+                        },
+                        "description": "",
+                        "response": []
+                    }
+                },
+                {
+                    "name": "Update Tasks status.",
+                    "request": {
+                        "url": {
+                            "protocol": "http",
+                            "host": "localhost:8000",
+                            "path": "api\/task\/:DriverPackage\/status\/update",
+                            "query": []
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"status\": \"Waiting\"\n}"
+                        },
+                        "description": "",
+                        "response": []
+                    }
+                },
+                {
+                    "name": "Get Tasks.",
+                    "request": {
+                        "url": {
+                            "protocol": "http",
+                            "host": "localhost:8000",
+                            "path": "api\/task\/all",
+                            "query": [
+                                {
+                                    "key": "start_date",
+                                    "value": "MM%2FDD%2FYYYY",
+                                    "description": "Date default(no start date).",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "end_date",
+                                    "value": "MM%2FDD%2FYYYY",
+                                    "description": "Date default(no end date).",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "10",
+                                    "description": "Integer the number of results u want default(unlimited).",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "sort_by",
+                                    "value": "id",
+                                    "description": "Enum (id, created_at) default(id).",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "sort_type",
+                                    "value": "ASC",
+                                    "description": "Enum (ASC, DESC) default(id).",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "status",
+                                    "value": "Waiting",
+                                    "description": "Enum (Waiting,Approved,Rejected,Delivering,Delivered) default(gets all).",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "search",
+                                    "value": "nesciunt",
+                                    "description": "string search for a package.",
+                                    "disabled": false
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "[]"
                         },
                         "description": "",
                         "response": []
