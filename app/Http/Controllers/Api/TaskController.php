@@ -43,7 +43,7 @@ class TaskController extends Controller
         }
         $sort_type= "ASC";
         $sort_by= "id";
-        $tasks= DriverPackage::with('package');
+        $tasks= DriverPackage::with(['package', 'package.addressFrom', 'package.addressTo']);
 
         if($request->get('sort_by')){
             $sort_by= $request->get('sort_by');
