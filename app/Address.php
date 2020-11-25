@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Address extends Model
 {
+    protected $with= ['country', 'state'];
     //
     public function addressable()
     {
