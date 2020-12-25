@@ -21,13 +21,14 @@ class Package extends Model
 
     public function addressFrom()
     {
-        return $this->belongsTo('App\Address', 'address_from');
+        return $this->belongsTo('App\Customer', 'address_from');
     }
 
     public function addressTo()
     {
-        return $this->belongsTo('App\Address', 'address_to');
+        return $this->belongsTo('App\Customer', 'address_to');
     }
+
     public function getStatusAttribute()
     {
         $drivers= $this->drivers()->count();

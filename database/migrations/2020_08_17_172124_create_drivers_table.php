@@ -19,6 +19,7 @@ class CreateDriversTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('fcm_token')->nullable();
             $table->enum('status', ["Online", "Offline"])->default('Offline');
             $table->boolean('available')->default(false);
             $table->enum('vehicle', ["Car", "Bicycle", "Van", "Motorcycle", "None"])->default('None');

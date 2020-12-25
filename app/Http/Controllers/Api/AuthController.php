@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-
+use App\Driver;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -49,7 +49,15 @@ class AuthController extends Controller
             return response()->json(['error' => 'Wrong email or password'], 401);
         }
 
-        return $this->respondWithToken($token);
+
+        if($request->fcm_token!= null){
+            $driver = Driver::find($request->id);
+            $driver->fcm_token = $request->fcm_token;
+            $driver->save();
+
+        }
+
+       return $this->respondWithToken($token);
     }
 
     /**
