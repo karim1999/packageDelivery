@@ -82,12 +82,8 @@ class PackageController extends Controller
             'width' => 'required',
             'height' => 'required',
             'length' => 'required',
-            'how_from' => 'required|in:List,New',
-            'type_from' => 'required_if:how_from,New|in:Map,Manual',
-            'address_id_from'=> 'required_if:how_from,List|exists:addresses,id',
-            'how_to' => 'required|in:List,New',
-            'type_to' => 'required_if:how_to,New|in:Map,Manual',
-            'address_id_to'=> 'required_if:how_to,List|exists:addresses,id',
+            'customer_id_from'=> 'required_if:how_from,List|exists:addresses,id',
+            'customer_id_to'=> 'required_if:how_to,List|exists:addresses,id',
             'driver'=> 'required|exists:drivers,id',
         ]);
 
@@ -97,47 +93,12 @@ class PackageController extends Controller
         $package->width= $request->input('width');
         $package->height= $request->input('height');
         $package->length= $request->input('length');
-        if($request->input('how_from') == "New"){
-            $request->merge([
-                'type' => $request->input('type_from'),
-                'country' => $request->input('country_from'),
-                'state' => $request->input('state_from'),
-                'city' => $request->input('city_from'),
-                'address' => $request->input('address_from'),
-                'postal_code' => $request->input('postal_code_from'),
-                'latitude' => $request->input('latitude_from'),
-                'longitude' => $request->input('longitude_from'),
-            ]);
-//            print_r($request->all());
-//            return $package;
-            $address= new Address();
-            $address= $this->address->verifyAddress($request, $address);
-            $address->user_id= auth()->user()->id;
-            $address->save();
-            $package->addressFrom()->associate($address->id);
-        }else{
-            $package->addressFrom()->associate($request->input('address_id_from'));
-        }
-        if($request->input('how_to') == "New"){
-            $request->merge([
-                'type' => $request->input('type_to'),
-                'country' => $request->input('country_to'),
-                'state' => $request->input('state_to'),
-                'city' => $request->input('city_to'),
-                'address' => $request->input('address_to'),
-                'postal_code' => $request->input('postal_code_to'),
-                'latitude' => $request->input('latitude_to'),
-                'longitude' => $request->input('longitude_to'),
-                'name' => $request->input('name'),
-            ]);
-            $address= new Address();
-            $address= $this->address->verifyAddress($request, $address);
-            $address->user_id= auth()->user()->id;
-            $address->save();
-            $package->addressTo()->associate($address->id);
-        }else{
-            $package->addressTo()->associate($request->input('address_id_to'));
-        }
+
+            $package->customerFrom()->associate($request->input('customer_id_from'));
+
+
+            $package->customerTo()->associate($request->input('customer_id_to'));
+
         return $package;
     }
 

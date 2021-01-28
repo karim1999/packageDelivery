@@ -38,7 +38,7 @@
                                             <i class="flaticon-bus-stop"></i>
                                         </div>
                                         <div class="kt-wizard-v1__nav-label">
-                                            2. Package Location
+                                            2. Package Recived from customer
                                         </div>
                                     </div>
                                 </div>
@@ -48,7 +48,7 @@
                                             <i class="flaticon-truck"></i>
                                         </div>
                                         <div class="kt-wizard-v1__nav-label">
-                                            3. Delivery Address
+                                            3. Delivery customer
                                         </div>
                                     </div>
                                 </div>
@@ -139,23 +139,20 @@
 
                             <!--begin: Form Wizard Step 2-->
                             <div class="kt-wizard-v1__content" data-ktwizard-type="step-content" data-ktwizard-state="current">
-                                <div class="kt-heading kt-heading--md">Setup Your Current Location</div>
+                                <div class="kt-heading kt-heading--md">Select a customer to recieve package from  </div>
                                 <div class="kt-form__section kt-form__section--first">
                                     <div class="kt-wizard-v1__form">
-                                        <div class="form-group form-group-marginless">
-                                            <label>How do you want to add the package location?</label>
-                                            <type-input name="how_from" @set-value="setHow_from" default="List" :options='@json($addAddressTypes)'></type-input>
-                                        </div>
+
                                         <div class="separator separator-dashed my-5"></div>
 
 
                                         <div v-if="how_from == 'List'" class="form-group form-group-marginless">
                                             <div class="form-group">
-                                                <label>Address: </label>
-                                                <select required name="address_id_from" class="form-control @error('address_id_from') is-invalid @enderror">
-                                                    <option disabled value="">Please select an Address</option>
-                                                    @foreach($addresses as $address)
-                                                        <option value="{{$address->id}}" {{old('address_from') == $address->id || ($package->address_from == $address->id) ? "selected": ""}}>{{$address->address_format}}</option>
+                                                <label>Customer: </label>
+                                                <select required name="customer_id_from" class="form-control @error('address_id_from') is-invalid @enderror">
+                                                    <option disabled value="">Please select a customer</option>
+                                                    @foreach($customers as $customer)
+                                                        <option value="{{$customer->id}}" {{old('customer_from') == $customer->id || ($package->customer_from == $customer->id) ? "selected": ""}}>{{$customer->name}}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('address_id_from')
@@ -163,83 +160,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div v-else class="form-group form-group-marginless">
-                                            <div class="form-group form-group-marginless">
-                                                <label>Choose Address Type:</label>
-                                                <type-input name="type_from" @set-value="setValue_from" default="{{old('type') ? old('type') : ($address->type ? $address->type : "Manual") }}" :options='@json($addressTypes)'></type-input>
-                                            </div>
-                                            <div class="separator separator-dashed my-5"></div>
 
-                                            <div v-if="value_from == 'Manual'" class="form-group form-group-marginless">
-                                                <div class="form-group">
-                                                    <label>Country: </label>
-                                                    <select required id="countrySelect_from" name="country_from" class="form-control @error('country_from') is-invalid @enderror">
-                                                        <option disabled value="">Please select a Country</option>
-                                                        @foreach($countries as $country)
-                                                            <option value="{{$country->id}}" {{old('country_from') == $country->id || ($address->country_id == $country->id) ? "selected": ""}}>{{$country->name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('country_from')
-                                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>State: </label>
-                                                    <select required name="state_from" class="form-control @error('state_from') is-invalid @enderror">
-                                                        @foreach($states as $state)
-                                                            <option value="{{$state->id}}" {{old('state_from') == $state->id || ($address->state_id == $state->id) ? "selected": ""}}>{{$state->name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('state_from')
-                                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                                    @enderror
-                                                </div>
-
-                                                <div class="separator separator-dashed my-5"></div>
-
-                                                <div class="form-group">
-                                                    <label>City:</label>
-                                                    <input required type="text" class="form-control @error('city_from') is-invalid @enderror" name="city_from"
-                                                           value="{{ old('city_from', $address->city) }}" placeholder="Enter city"/>
-                                                    @error('city_from')
-                                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                                    @enderror
-                                                </div>
-
-                                                <div class="separator separator-dashed my-5"></div>
-
-                                                <div class="form-group">
-                                                    <label>Address:</label>
-                                                    <input required type="text" class="form-control @error('address') is-invalid @enderror"
-                                                           name="address_from" value="{{ old('address', $address->street) }}" placeholder="Enter address"/>
-                                                    @error('address')
-                                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                                    @enderror
-                                                </div>
-
-                                                <div class="separator separator-dashed my-5"></div>
-
-                                                <div class="form-group">
-                                                    <label>Postal Code:</label>
-                                                    <input required type="text" pattern="[0-9]{5}" class="form-control @error('postal_code_from') is-invalid @enderror"
-                                                           name="postal_code_from" value="{{ old('postal_code_from', $address->postal_code) }}" placeholder="Enter postal code"/>
-                                                    @error('postal_code_from')
-                                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                                    @enderror
-                                                </div>
-
-                                                <div class="separator separator-dashed my-5"></div>
-                                            </div>
-                                            <div v-else class="form-group form-group-marginless">
-                                                <div class="separator separator-dashed my-5"></div>
-
-                                                <gmap-map :center="center_from" :zoom="7" style="width: 100%; height: 500px">
-                                                    <gmap-marker :position="position_from" :clickable="true" :draggable="true" @dragend="gMapFunc_from($event.latLng)"></gmap-marker>
-                                                </gmap-map>
-                                                <input type="hidden" required style="display: none" name="latitude_from" v-model="position_from.lat" value="{{ old('latitude_from', $address->latitude) }}">
-                                                <input type="hidden" required style="display: none" name="longitude_from" v-model="position_from.lng" value="{{ old('longitude_from', $address->longitude) }}">
-                                            </div>
-                                        </div>
 
                                     </div>
                                 </div>
@@ -249,107 +170,28 @@
 
                             <!--begin: Form Wizard Step 3-->
                             <div class="kt-wizard-v1__content" data-ktwizard-type="step-content">
-                                <div class="kt-heading kt-heading--md">Setup Your Delivery Location</div>
+                                <div class="kt-heading kt-heading--md">Setup Your Delivery Customer</div>
                                 <div class="kt-form__section kt-form__section--first">
                                     <div class="kt-wizard-v1__form">
-                                        <div class="form-group form-group-marginless">
-                                            <label>How do you want to add the package Delivery location?</label>
-                                            <type-input name="how_to" @set-value="setHow_to" default="List" :options='@json($addAddressTypes)'></type-input>
-                                        </div>
+
                                         <div class="separator separator-dashed my-5"></div>
 
 
                                         <div v-if="how_to == 'List'" class="form-group form-group-marginless">
                                             <div class="form-group">
-                                                <label>Address: </label>
-                                                <select required name="address_id_to" class="form-control @error('address_id_to') is-invalid @enderror">
-                                                    <option disabled value="">Please select an Address</option>
-                                                    @foreach($addresses as $address)
-                                                        <option value="{{$address->id}}" {{old('address_to') == $address->id || ($package->address_to == $address->id) ? "selected": ""}}>{{$address->address_format}}</option>
+                                                <label>Customer: </label>
+                                                <select required name="customer_id_to" class="form-control @error('customer_id_to') is-invalid @enderror">
+                                                    <option disabled value="">Please select a Customer</option>
+                                                    @foreach($customers as $customer)
+                                                        <option value="{{$customer->id}}" {{old('customer_to') == $customer->id || ($package->customer_to == $customer->id) ? "selected": ""}}>{{$customer->name}}</option>
                                                     @endforeach
                                                 </select>
-                                                @error('address_id_to')
+                                                @error('customer_id_to')
                                                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div v-else class="form-group form-group-marginless">
-                                            <div class="form-group form-group-marginless">
-                                                <label>Choose Address Type:</label>
-                                                <type-input name="type_to" @set-value="setValue_to" default="{{old('type') ? old('type') : ($address->type ? $address->type : "Manual") }}" :options='@json($addressTypes)'></type-input>
-                                            </div>
-                                            <div class="separator separator-dashed my-5"></div>
 
-                                            <div v-if="value_to == 'Manual'" class="form-group form-group-marginless">
-                                                <div class="form-group">
-                                                    <label>Country: </label>
-                                                    <select required id="countrySelect_to" name="country_to" class="form-control @error('country_to') is-invalid @enderror">
-                                                        <option disabled value="">Please select a Country</option>
-                                                        @foreach($countries as $country)
-                                                            <option value="{{$country->id}}" {{old('country_to') == $country->id || ($address->country_id == $country->id) ? "selected": ""}}>{{$country->name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('country_to')
-                                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>State: </label>
-                                                    <select required id="stateSelect_to" name="state_to" class="form-control @error('state_to') is-invalid @enderror">
-                                                        @foreach($states as $state)
-                                                            <option value="{{$state->id}}" {{old('state_to') == $state->id || ($address->state_id == $state->id) ? "selected": ""}}>{{$state->name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('state_to')
-                                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                                    @enderror
-                                                </div>
-
-                                                <div class="separator separator-dashed my-5"></div>
-
-                                                <div class="form-group">
-                                                    <label>City:</label>
-                                                    <input required type="text" class="form-control @error('city_to') is-invalid @enderror" name="city_to"
-                                                           value="{{ old('city_to', $address->city) }}" placeholder="Enter city"/>
-                                                    @error('city_to')
-                                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                                    @enderror
-                                                </div>
-
-                                                <div class="separator separator-dashed my-5"></div>
-
-                                                <div class="form-group">
-                                                    <label>Address:</label>
-                                                    <input required type="text" class="form-control @error('address') is-invalid @enderror"
-                                                           name="address_to" value="{{ old('address', $address->street) }}" placeholder="Enter address"/>
-                                                    @error('address')
-                                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                                    @enderror
-                                                </div>
-
-                                                <div class="separator separator-dashed my-5"></div>
-
-                                                <div class="form-group">
-                                                    <label>Postal Code:</label>
-                                                    <input required type="text" pattern="[0-9]{5}" class="form-control @error('postal_code_to') is-invalid @enderror"
-                                                           name="postal_code_to" value="{{ old('postal_code_to', $address->postal_code) }}" placeholder="Enter postal code"/>
-                                                    @error('postal_code_to')
-                                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                                    @enderror
-                                                </div>
-
-                                                <div class="separator separator-dashed my-5"></div>
-                                            </div>
-                                            <div v-else class="form-group form-group-marginless">
-                                                <div class="separator separator-dashed my-5"></div>
-
-                                                <gmap-map :center="center_to" :zoom="7" style="width: 100%; height: 500px">
-                                                    <gmap-marker :position="position_to" :clickable="true" :draggable="true" @dragend="gMapFunc_to($event.latLng)"></gmap-marker>
-                                                </gmap-map>
-                                                <input type="hidden" required style="display: none" name="latitude_to" v-model="position_to.lat" value="{{ old('latitude_to', $address->latitude) }}">
-                                                <input type="hidden" required style="display: none" name="longitude_to" v-model="position_to.lng" value="{{ old('longitude_to', $address->longitude) }}">
-                                            </div>
-                                        </div>
 
                                     </div>
                                 </div>
@@ -367,7 +209,7 @@
                                             <select required name="driver" class="form-control @error('driver') is-invalid @enderror">
                                                 <option disabled value="">Please select a driver</option>
                                                 @foreach($drivers as $diver)
-                                                    <option value="{{$diver->id}}" {{old('driver') == $diver->id || ($address->country_id == $diver->id) ? "selected": ""}}>{{$diver->name}}</option>
+                                                    <option value="{{$diver->id}}" {{old('driver') == $diver->id || ($package->driver_id == $diver->id) ? "selected": ""}}>{{$diver->name}}</option>
                                                 @endforeach
                                             </select>
                                             @error('driver')

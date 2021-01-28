@@ -21,12 +21,22 @@ class Package extends Model
 
     public function addressFrom()
     {
-        return $this->belongsTo('App\Customer', 'address_from');
+        return $this->belongsTo('App\Customer', 'customer_from');
     }
 
     public function addressTo()
     {
-        return $this->belongsTo('App\Customer', 'address_to');
+        return $this->belongsTo('App\Customer', 'customer_to');
+    }
+
+    public function customerFrom()
+    {
+        return $this->belongsTo('App\Customer', 'customer_from');
+    }
+
+    public function customerTo()
+    {
+        return $this->belongsTo('App\Customer', 'customer_to');
     }
 
     public function getStatusAttribute()

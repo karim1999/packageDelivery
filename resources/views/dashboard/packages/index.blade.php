@@ -52,11 +52,11 @@
                             <th>{{$package->dimensions}}</th>
                             <th>
                                 <p>
-                                    From >> {!! $package->addressFrom->addressFormatWithLink !!}
+                                    From >> {!! $package->customerFrom->name !!}
                                 </p>
                                 <br>
                                 <p>
-                                    To >> {!! $package->addressTo->addressFormatWithLink !!}
+                                    To >> {!! $package->customerTo->name !!}
                                 </p>
                             </th>
                             <th>{{$package->currentDriver->name}}</th>

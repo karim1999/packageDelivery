@@ -25,12 +25,12 @@ class CreatePackagesTable extends Migration
             $table->integer('width')->nullable();
             $table->integer('height')->nullable();
             $table->integer('length')->nullable();
-            $table->unsignedBigInteger('address_from');
-            $table->foreign('address_from')->references('address_id')
+            $table->unsignedBigInteger('customer_from');
+            $table->foreign('customer_from')->references('id')
                 ->on('customers')
                 ->onDelete('cascade');
-            $table->unsignedBigInteger('address_to');
-            $table->foreign('address_to')->references('address_id')
+            $table->unsignedBigInteger('customer_to');
+            $table->foreign('customer_to')->references('id')
                 ->on('customers')
                 ->onDelete('cascade');
             $table->timestamps();
