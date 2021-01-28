@@ -55,4 +55,3 @@ Route::group([
 //    Route::post('{package}/status/update', 'Api\PackageController@update');
 //    Route::get('all', 'Api\PackageController@all');
 //});
-

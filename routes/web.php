@@ -28,6 +28,9 @@ Route::middleware(['auth'])->group(function (){
     Route::middleware(['subscribed'])->prefix('dashboard')->name('dashboard.')->group(function (){
         Route::get('/', 'dashboard\HomeController@index')->name('home');
         Route::resource('/package', 'dashboard\PackageController');
+        Route::resource('/kanban', 'dashboard\KanbanController');
+        Route::get('/change_status', 'dashboard\KanbanController@change_status');
+
         Route::resource('/driver', 'dashboard\DriverController');
         Route::resource('/customer', 'dashboard\CustomerController');
         Route::resource('/address', 'dashboard\AddressController');

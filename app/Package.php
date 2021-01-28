@@ -18,6 +18,10 @@ class Package extends Model
     {
         return $this->belongsToMany('App\Driver', 'driver_packages')->using('App\DriverPackage')->withPivot(['status'])->withTimestamps();
     }
+    public function driversPackages()
+    {
+        return $this->belongsToMany('App\DriverPackage', 'package_id','id');
+    }
 
     public function addressFrom()
     {
@@ -61,5 +65,6 @@ class Package extends Model
             return false;
         }
     }
+
 
 }
