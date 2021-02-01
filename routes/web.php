@@ -29,6 +29,8 @@ Route::middleware(['auth'])->group(function (){
         Route::get('/', 'dashboard\HomeController@index')->name('home');
         Route::resource('/package', 'dashboard\PackageController');
         Route::resource('/kanban', 'dashboard\KanbanController');
+        Route::resource('/maps', 'dashboard\MapsController');
+
         Route::get('/change_status', 'dashboard\KanbanController@change_status');
 
         Route::resource('/driver', 'dashboard\DriverController');

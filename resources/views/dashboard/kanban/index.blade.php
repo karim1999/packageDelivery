@@ -4,18 +4,7 @@
 @section('content')
 
 <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-  <div class="row">
-    <div class="col">
-      <div class="alert alert-light alert-elevate fade show" role="alert">
-        <div class="alert-icon"><i class="flaticon-warning kt-font-brand"></i></div>
-        <div class="alert-text">
-          Kanban JavaScript UI widget for web developers
-          <br>
-          For more info please visit the plugin's <a class="kt-link kt-font-bold" href="http://www.riccardotartaglia.it/jkanban/" target="_blank">Demo Page</a> or <a class="kt-link kt-font-bold" href="https://github.com/riktar/jkanban" target="_blank">GitHub</a>.
-        </div>
-      </div>
-    </div>
-  </div>
+
 
   <div class="row">
     <div class="col-lg-12">
@@ -23,7 +12,7 @@
         <div class="kt-portlet__head">
           <div class="kt-portlet__head-label">
             <h3 class="kt-portlet__head-title">
-              Custom Colors Demo
+              Kanban
             </h3>
           </div>
         </div>
