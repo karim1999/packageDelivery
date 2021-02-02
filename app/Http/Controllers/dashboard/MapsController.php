@@ -44,7 +44,9 @@ class MapsController extends Controller
     public function index(Request $request)
     {
       $packages= auth()->user()->packages();
-      return view('dashboard.maps.index',['packages'=>$packages]);
+      $drivers= auth()->user()->drivers();
+
+      return view('dashboard.maps.index',['packages'=>$packages,'drivers'=>$drivers]);
     }
 
     /**

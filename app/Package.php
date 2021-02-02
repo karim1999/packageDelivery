@@ -9,6 +9,7 @@ class Package extends Model
 {
     use Metable;
     //
+    protected $appends = ['status'];
     public function user()
     {
         return $this->belongsTo('App\User');

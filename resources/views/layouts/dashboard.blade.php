@@ -141,6 +141,7 @@
 {{--                        </li>--}}
                         <li class="kt-menu__item " aria-haspopup="true"><a target="_blank" href="{{route('home')}}" class="kt-menu__link "><i class="kt-menu__link-icon fa fa-credit-card"></i><span class="kt-menu__link-text">Subscription</span></a></li>
                         <li class="kt-menu__item active" aria-haspopup="true"><a href="/dashboard/kanban" class="kt-menu__link "><i class="kt-menu__link-icon fa fa-tasks"></i><span class="kt-menu__link-text">Kanban</span></a></li>
+                        <li class="kt-menu__item active" aria-haspopup="true"><a href="/dashboard/maps" class="kt-menu__link "><i class="kt-menu__link-icon fa fa-tasks"></i><span class="kt-menu__link-text">Map</span></a></li>
 
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

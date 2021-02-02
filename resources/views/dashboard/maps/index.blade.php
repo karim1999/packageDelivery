@@ -29,7 +29,7 @@
     </style>
 
 
-      <body>
+      <body id="app">
         <div class="container-fluid ">
           <!-- header -->
           <div class="row" style="background:#1a1b27">
@@ -44,34 +44,47 @@
               <h3 style="color:#fff">Packages</h3>
             </div>
               <nav style="margin-top:5px">
-                <div class="nav nav-pills" id="nav-tab" role="tablist">
-                  <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-Waiting" aria-selected="true">Waiting</a>
-                  <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-Approved" aria-selected="false">Approved</a>
-                  <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-Rejected" aria-selected="false">Rejected</a>
-                  <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-Delivering" aria-selected="false">Delivering</a>
-                  <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-Delivered" aria-selected="false">Delivered</a>
+                <div class="nav nav-pills d-flex justify-content-center" id="nav-tab" role="tablist">
+                  <a class="nav-item nav-link active" id="nav-Waiting-tab" data-toggle="tab" href="#nav-Waiting" role="tab" aria-controls="nav-Waiting" aria-selected="true">Waiting</a>
+                  <a class="nav-item nav-link" id="nav-Approved-tab" data-toggle="tab" href="#nav-Approved" role="tab" aria-controls="nav-Approved" aria-selected="false">Approved</a>
+                  <a class="nav-item nav-link" id="nav-Rejected-tab" data-toggle="tab" href="#nav-Rejected" role="tab" aria-controls="nav-Rejected" aria-selected="false">Rejected</a>
+                  <a class="nav-item nav-link" id="nav-Delivering-tab" data-toggle="tab" href="#nav-Delivering" role="tab" aria-controls="nav-Delivering" aria-selected="false">Delivering</a>
+                  <a class="nav-item nav-link" id="nav-Delivered-tab" data-toggle="tab" href="#nav-Delivered" role="tab" aria-controls="nav-Delivered" aria-selected="false">Delivered</a>
 
 
                 </div>
               </nav>
               <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-Waiting-tab">
-                  <div class="list-group">
-                    <button type="button" class="list-group-item list-group-item-action active">
-                      Cras justo odio
-                    </button>
-                    <button type="button" class="list-group-item list-group-item-action">Dapibus ac facilisis in</button>
-                    <button type="button" class="list-group-item list-group-item-action">Morbi leo risus</button>
-                    <button type="button" class="list-group-item list-group-item-action">Porta ac consectetur ac</button>
-                    <button type="button" class="list-group-item list-group-item-action" disabled>Vestibulum at eros</button>
+                <div class="tab-pane fade show active" id="nav-Waiting" role="tabpanel" aria-labelledby="nav-Waiting-tab">
+                  <div class="list-group" v-for="package in packages">
+                    <button type="button"  v-if= "package.status == 'Waiting'" class="list-group-item list-group-item-action ">@{{package.name}}</button>
                   </div>
 
                   </div>
-                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-Approved-tab">...</div>
-                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-Rejected-tab">...</div>
-                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-Delivering-tab">...</div>
-                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-Delivered-tab">...</div>
+                <div class="tab-pane fade" id="nav-Approved" role="tabpanel" aria-labelledby="nav-Approved-tab">
+                  <div class="list-group" v-for="package in packages">
+                    <button type="button"  v-if= "package.status == 'Approved'" class="list-group-item list-group-item-action ">@{{package.name}}</button>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="nav-Rejected" role="tabpanel" aria-labelledby="nav-Rejected-tab">
+                  <div class="list-group" v-for="package in packages">
+                    <button type="button"  v-if= "package.status == 'Rejected'" class="list-group-item list-group-item-action ">@{{package.name}}</button>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="nav-Delivering" role="tabpanel" aria-labelledby="nav-Delivering-tab">
+                  <div class="list-group" v-for="package in packages">
+                    <button type="button"  v-if= "package.status == 'Delivering'" class="list-group-item list-group-item-action ">@{{package.name}}</button>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="nav-Delivered" role="tabpanel" aria-labelledby="nav-Delivered-tab">
+                  <div class="list-group" v-for="package in packages">
+                    <button type="button"  v-if= "package.status == 'Delivered'" class="list-group-item list-group-item-action ">@{{package.name}}</button>
+                  </div>
+                </div>
+                <div class="list-group">
 
+                  <button type="button" class="list-group-item list-group-item-action ">Add Package</button>
+                </div>
               </div>
             </div>
 
@@ -93,42 +106,65 @@
               <h3 style="color:#fff">Drivers</h3>
               </div>
               <nav style="margin-top:5px">
-                <div class="nav nav-pills" id="nav-tab" role="tablist">
-                  <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-Waiting" aria-selected="true">Waiting</a>
-                  <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-Approved" aria-selected="false">Approved</a>
-                  <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-Rejected" aria-selected="false">Rejected</a>
-                  <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-Delivering" aria-selected="false">Delivering</a>
-                  <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-Delivered" aria-selected="false">Delivered</a>
+                <div class="nav nav-pills d-flex justify-content-center" id="nav-tab" role="tablist">
+                  <a class="nav-item nav-link active" id="nav-Online-tab" data-toggle="tab" href="#nav-Online" role="tab" aria-controls="nav-Online" aria-selected="false">Online</a>
+                  <a class="nav-item nav-link" id="nav-Offline-tab" data-toggle="tab" href="#nav-Offline" role="tab" aria-controls="nav-Offline" aria-selected="false">Offline</a>
+                  <a class="nav-item nav-link" id="nav-Busy-tab" data-toggle="tab" href="#nav-Busy" role="tab" aria-controls="nav-Busy" aria-selected="false">Busy</a>
 
 
                 </div>
               </nav>
               <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-Waiting-tab">
+                <div class="tab-pane fade show active" id="nav-Online" role="tabpanel" aria-labelledby="nav-Online-tab">
                   <div class="list-group">
-                    <button type="button" class="list-group-item list-group-item-action active">
-                      Cras justo odio
-                    </button>
-                    <button type="button" class="list-group-item list-group-item-action">Dapibus ac facilisis in</button>
-                    <button type="button" class="list-group-item list-group-item-action">Morbi leo risus</button>
-                    <button type="button" class="list-group-item list-group-item-action">Porta ac consectetur ac</button>
-                    <button type="button" class="list-group-item list-group-item-action" disabled>Vestibulum at eros</button>
+                    @foreach($drivers->get() as $package)
+                      @if($package->status == 'Online')
+
+                    <button type="button" class="list-group-item list-group-item-action ">{{$package->name}}</button>
+                      @endif
+                    @endforeach
                   </div>
 
                   </div>
-                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-Approved-tab">...</div>
-                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-Rejected-tab">...</div>
-                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-Delivering-tab">...</div>
-                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-Delivered-tab">...</div>
+                <div class="tab-pane fade" id="nav-Offline" role="tabpanel" aria-labelledby="nav-Offline-tab">
+                  <div class="list-group">
+                    @foreach($drivers->get() as $package)
+                      @if($package->status == 'Offline')
+
+                    <button type="button" class="list-group-item list-group-item-action ">{{$package->name}}</button>
+                      @endif
+                    @endforeach
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="nav-Busy" role="tabpanel" aria-labelledby="nav-Busy-tab">
+                  <div class="list-group">
+                    @foreach($drivers->get() as $driver)
+                      @if($driver->status == 'Busy')
+
+                    <button type="button" class="list-group-item list-group-item-action ">{{$driver->name}}</button>
+                      @endif
+                    @endforeach
+                  </div>
+                </div>
+                <button type="button" class="list-group-item list-group-item-action ">Add Driver</button>
+
 
               </div>
 
             </div>
           </div>
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.10/vue.js"></script>
 
 
+          <div
+                         class="clearfix"
+                         v-for="package in packages"
+                     >
+                         @{{ package.id }}: @{{ package.name }}
+                     </div>
 
         </div>
+
       </body>
       <!-- Option 1: Bootstrap Bundle with Popper -->
       <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -276,6 +312,7 @@
   });
   </script>
   <script src="{{asset('assets/js/kanban-board.js')}}" type="text/javascript"></script>
+
 <script>
 
 function initMap() {
@@ -294,5 +331,45 @@ function initMap() {
          map: map,
        });
      }
+
+     const app = new Vue({
+         el: '#app',
+
+         data() {
+           return {
+             packages: {!! json_encode($packages->get()) !!},
+             messages: [{id:1,name:'sss'},{id:1,name:'sss'}]
+           }
+         },
+
+         created() {
+
+         },
+
+         methods: {
+             fetchMessages() {
+                 axios.get('/messages').then(response => {
+                     this.messages = response.data;
+                 });
+             },
+
+             addMessage(message) {
+                 axios.post('/messages', {
+                     message
+                 }).then(response => {
+                     this.messages.push({
+                         message: response.data.message.message,
+                         user: response.data.user
+                     });
+                 });
+             },
+
+             sendMessage() {
+                 this.addMessage(this.newMessage);
+                 this.newMessage = '';
+             }
+         }
+     });
+
 
 </script>
