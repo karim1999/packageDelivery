@@ -97,6 +97,7 @@ class DriverController extends Controller
         }
 
         $user->save();
+        event(new DriverRecieved($user->name, $user->id,$user->status,$request->input('lat'),$request->input('long')));
 
 
         return response()->json([
@@ -126,6 +127,7 @@ class DriverController extends Controller
         $user->available= $request->input('available');
 
         $user->save();
+        event(new DriverRecieved($user->name, $user->id,$request->input('available'),$user->lat,$user->long));
 
 
         return response()->json([

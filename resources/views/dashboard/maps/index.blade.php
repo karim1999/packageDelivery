@@ -116,34 +116,20 @@
               </nav>
               <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-Online" role="tabpanel" aria-labelledby="nav-Online-tab">
-                  <div class="list-group">
-                    @foreach($drivers->get() as $package)
-                      @if($package->status == 'Online')
-
-                    <button type="button" class="list-group-item list-group-item-action ">{{$package->name}}</button>
-                      @endif
-                    @endforeach
+                  <div class="list-group" v-for="driver in drivers">
+                    <button type="button"  v-if= "driver.status == 'Online'" class="list-group-item list-group-item-action ">@{{driver.name}}</button>
                   </div>
+
 
                   </div>
                 <div class="tab-pane fade" id="nav-Offline" role="tabpanel" aria-labelledby="nav-Offline-tab">
-                  <div class="list-group">
-                    @foreach($drivers->get() as $package)
-                      @if($package->status == 'Offline')
-
-                    <button type="button" class="list-group-item list-group-item-action ">{{$package->name}}</button>
-                      @endif
-                    @endforeach
+                  <div class="list-group" v-for="driver in drivers">
+                    <button type="button"  v-if= "driver.status == 'Offline'" class="list-group-item list-group-item-action ">@{{driver.name}}</button>
                   </div>
                 </div>
                 <div class="tab-pane fade" id="nav-Busy" role="tabpanel" aria-labelledby="nav-Busy-tab">
-                  <div class="list-group">
-                    @foreach($drivers->get() as $driver)
-                      @if($driver->status == 'Busy')
-
-                    <button type="button" class="list-group-item list-group-item-action ">{{$driver->name}}</button>
-                      @endif
-                    @endforeach
+                  <div class="list-group" v-for="driver in drivers">
+                    <button type="button"  v-if= "driver.status == 'Busy'" class="list-group-item list-group-item-action ">@{{driver.name}}</button>
                   </div>
                 </div>
                 <button type="button" class="list-group-item list-group-item-action ">Add Driver</button>
@@ -156,14 +142,10 @@
           <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.10/vue.js"></script>
 
 
-          <div
-                         class="clearfix"
-                         v-for="package in packages"
-                     >
-                         @{{ package.id }}: @{{ package.name }}
-                     </div>
+
 
         </div>
+
 
       </body>
       <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -312,10 +294,12 @@
   });
   </script>
   <script src="{{asset('assets/js/kanban-board.js')}}" type="text/javascript"></script>
+  <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 
 <script>
-
-function initMap() {
+markers = [];
+infowindow = [];
+var  initMap = ()=> {
        // The location of Uluru
        const uluru = { lat: -25.344, lng: 131.036 };
        // The map, centered at Uluru
@@ -326,11 +310,32 @@ function initMap() {
 
        });
        // The marker, positioned at Uluru
-       const marker = new google.maps.Marker({
-         position: uluru,
-         map: map,
+       app.drivers.map((driver)=>{
+         markers[driver.id] = new google.maps.Marker({
+          position:  { lat: parseInt(driver.lat), lng:parseInt(driver.long) },
+          map: map,
+        });
+         infowindow[driver.id] = new google.maps.InfoWindow({
+          content: "<h3>"+driver.name+"</h3>"
+        });
+        google.maps.event.addListener(markers[driver.id], 'click', function() {
+            infowindow[driver.id].open(map,markers[driver.id]);
+        });
        });
+
      }
+
+     var pusher = new Pusher('cd684f435e5228ec1605', {
+     cluster: 'us2'
+   });
+
+   var channel = pusher.subscribe('drivers');
+   channel.bind('update', function(data) {
+     // console.log(data);
+     app.updateDriver(data)
+     // app.messages.push(JSON.stringify(data));
+   });
+
 
      const app = new Vue({
          el: '#app',
@@ -338,7 +343,8 @@ function initMap() {
          data() {
            return {
              packages: {!! json_encode($packages->get()) !!},
-             messages: [{id:1,name:'sss'},{id:1,name:'sss'}]
+             messages: [{id:1,name:'sss'},{id:1,name:'sss'}],
+             drivers:{!! json_encode($drivers->get()) !!}
            }
          },
 
@@ -347,11 +353,20 @@ function initMap() {
          },
 
          methods: {
-             fetchMessages() {
-                 axios.get('/messages').then(response => {
-                     this.messages = response.data;
-                 });
-             },
+             updateDriver(data) {
+               markers[data.id].setPosition({lat:parseInt(data.lat),lng:parseInt(data.long)});
+
+               let obj = this.drivers.find(f=>f.id==data.id);
+                if(obj){
+                  obj.name =data.name;
+                  obj.id = data.id;
+                  obj.status= data.status;
+                  obj.lat = data.lat;
+                  obj.long = data.long;
+                }
+                // console.log(this.drivers);
+                },
+
 
              addMessage(message) {
                  axios.post('/messages', {

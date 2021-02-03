@@ -5,6 +5,8 @@ namespace App\Http\Controllers\dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\DriverPackage;
+use App\Events\DriverRecieved;
+
 class MapsController extends Controller
 {
     /**
@@ -45,6 +47,7 @@ class MapsController extends Controller
     {
       $packages= auth()->user()->packages();
       $drivers= auth()->user()->drivers();
+      // event(new DriverRecieved('hassan', 1,'Offline','7.8','20.9'));
 
       return view('dashboard.maps.index',['packages'=>$packages,'drivers'=>$drivers]);
     }

@@ -12,6 +12,7 @@
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^6.3",
+        "larasocket/larasocket-driver": "^1.0",
         "laravel/cashier": "^12.2",
         "laravel/framework": "^7.24",
         "laravel/passport": "^9.3",
@@ -19,6 +20,7 @@
         "laravel/ui": "^2.1",
         "mpociot/laravel-apidoc-generator": "^4.8",
         "plank/laravel-metable": "^2.1",
+        "pusher/pusher-php-server": "^4.1",
         "spatie/laravel-medialibrary": "^8.0.0",
         "spatie/laravel-permission": "^3.15",
         "tymon/jwt-auth": "^1.0"
