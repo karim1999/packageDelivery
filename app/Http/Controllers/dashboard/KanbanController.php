@@ -5,6 +5,8 @@ namespace App\Http\Controllers\dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\DriverPackage;
+use App\Events\DriverRecieved;
+
 class KanbanController extends Controller
 {
     /**
@@ -44,6 +46,8 @@ class KanbanController extends Controller
     public function index(Request $request)
     {
       $packages= auth()->user()->packages();
+      event(new DriverRecieved('hassan', 1,'Offline','7','20.9'));
+
       return view('dashboard.kanban.index',['packages'=>$packages]);
     }
 

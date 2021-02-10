@@ -47,7 +47,6 @@ class MapsController extends Controller
     {
       $packages= auth()->user()->packages();
       $drivers= auth()->user()->drivers();
-      // event(new DriverRecieved('hassan', 1,'Offline','7.8','20.9'));
 
       return view('dashboard.maps.index',['packages'=>$packages,'drivers'=>$drivers]);
     }

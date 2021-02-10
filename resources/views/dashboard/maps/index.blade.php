@@ -7,6 +7,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 <link href="{{asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('assets/plugins/kanban/kanban.bundle.css')}}" rel="stylesheet" type="text/css" />
+<script src="/js/bootstrap.js"></script>
 
 <style type="text/css">
       /* Always set the map height explicitly to define the size of the div
@@ -57,28 +58,28 @@
               <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-Waiting" role="tabpanel" aria-labelledby="nav-Waiting-tab">
                   <div class="list-group" v-for="package in packages">
-                    <button type="button"  v-if= "package.status == 'Waiting'" class="list-group-item list-group-item-action ">@{{package.name}}</button>
+                    <button type="button"  v-if= "package.status == 'Waiting'" class="list-group-item list-group-item-action ">@{{package.name}} => @{{package.drivers[0].name}}</button>
                   </div>
 
                   </div>
                 <div class="tab-pane fade" id="nav-Approved" role="tabpanel" aria-labelledby="nav-Approved-tab">
                   <div class="list-group" v-for="package in packages">
-                    <button type="button"  v-if= "package.status == 'Approved'" class="list-group-item list-group-item-action ">@{{package.name}}</button>
+                    <button type="button"  v-if= "package.status == 'Approved'" class="list-group-item list-group-item-action ">@{{package.name}} => @{{package.drivers[0].name}}</button>
                   </div>
                 </div>
                 <div class="tab-pane fade" id="nav-Rejected" role="tabpanel" aria-labelledby="nav-Rejected-tab">
                   <div class="list-group" v-for="package in packages">
-                    <button type="button"  v-if= "package.status == 'Rejected'" class="list-group-item list-group-item-action ">@{{package.name}}</button>
+                    <button type="button"  v-if= "package.status == 'Rejected'" class="list-group-item list-group-item-action ">@{{package.name}} => @{{package.drivers[0].name}}</button>
                   </div>
                 </div>
                 <div class="tab-pane fade" id="nav-Delivering" role="tabpanel" aria-labelledby="nav-Delivering-tab">
                   <div class="list-group" v-for="package in packages">
-                    <button type="button"  v-if= "package.status == 'Delivering'" class="list-group-item list-group-item-action ">@{{package.name}}</button>
+                    <button type="button"  v-if= "package.status == 'Delivering'" class="list-group-item list-group-item-action ">@{{package.name}}  => @{{package.drivers[0].name}}</button>
                   </div>
                 </div>
                 <div class="tab-pane fade" id="nav-Delivered" role="tabpanel" aria-labelledby="nav-Delivered-tab">
                   <div class="list-group" v-for="package in packages">
-                    <button type="button"  v-if= "package.status == 'Delivered'" class="list-group-item list-group-item-action ">@{{package.name}}</button>
+                    <button type="button"  v-if= "package.status == 'Delivered'" class="list-group-item list-group-item-action ">@{{package.name}} => @{{package.drivers[0].name}}</button>
                   </div>
                 </div>
                 <div class="list-group">
@@ -325,16 +326,35 @@ var  initMap = ()=> {
 
      }
 
-     var pusher = new Pusher('cd684f435e5228ec1605', {
-     cluster: 'us2'
-   });
+   //   var pusher = new Pusher('cd684f435e5228ec1605', {
+   //   cluster: 'us2'
+   // });
+   Echo.channel('drivers')
+       .listen('update', (e) => {
+         app.updateDriver(e)
 
-   var channel = pusher.subscribe('drivers');
-   channel.bind('update', function(data) {
-     // console.log(data);
-     app.updateDriver(data)
-     // app.messages.push(JSON.stringify(data));
-   });
+           console.log(e);
+       });
+
+   // var channel = pusher.subscribe('drivers');
+   // channel.bind('update', function(data) {
+   //   // console.log(data);
+   //   app.updateDriver(data)
+   //   // app.messages.push(JSON.stringify(data));
+   // });
+
+
+
+   // import Echo from 'laravel-echo';
+   //
+   // window.Pusher = require('pusher-js');
+   //
+   // window.Echo = new Echo({
+   //     broadcaster: 'pusher',
+   //     key: process.env.MIX_PUSHER_APP_KEY,
+   //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+   //     forceTLS: true
+   // });
 
 
      const app = new Vue({
@@ -342,7 +362,7 @@ var  initMap = ()=> {
 
          data() {
            return {
-             packages: {!! json_encode($packages->get()) !!},
+             packages: {!! json_encode($packages->with('drivers')->get()) !!},
              messages: [{id:1,name:'sss'},{id:1,name:'sss'}],
              drivers:{!! json_encode($drivers->get()) !!}
            }

@@ -12,6 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        'dashboard/change_status'
+        'dashboard/change_status',
+        '/add-message'
     ];
 }
