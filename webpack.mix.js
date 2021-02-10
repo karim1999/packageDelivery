@@ -11,12 +11,12 @@ const mix = require('laravel-mix');
  |
  */
 
-// mix.js('resources/js/app.js', 'public/js')
-// mix.js('resources/js/auth.js', 'public/js')
-// mix.js('resources/js/payment_method.js', 'public/js')
-// mix.js('resources/js/addressForm.js', 'public/js')
-// mix.js('resources/js/packageForm.js', 'public/js')
-// mix.js('resources/js/customerForm.js', 'public/js')
+mix.js('resources/js/app.js', 'public/js')
+mix.js('resources/js/auth.js', 'public/js')
+mix.js('resources/js/payment_method.js', 'public/js')
+mix.js('resources/js/addressForm.js', 'public/js')
+mix.js('resources/js/packageForm.js', 'public/js')
+mix.js('resources/js/customerForm.js', 'public/js')
 mix.js('resources/js/bootstrap.js', 'public/js')
 
-    // .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/sass/app.scss', 'public/css');

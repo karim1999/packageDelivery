@@ -1,3 +1,10 @@
 {
-    "/js/bootstrap.js": "/js/bootstrap.js"
+    "/js/app.js": "/js/app.js",
+    "/js/auth.js": "/js/auth.js",
+    "/js/payment_method.js": "/js/payment_method.js",
+    "/js/addressForm.js": "/js/addressForm.js",
+    "/js/packageForm.js": "/js/packageForm.js",
+    "/js/customerForm.js": "/js/customerForm.js",
+    "/js/bootstrap.js": "/js/bootstrap.js",
+    "/css/app.css": "/css/app.css"
 }
