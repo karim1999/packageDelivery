@@ -1,4 +1,6 @@
-window.Vue = require('vue');
+import Vue from 'vue/dist/vue'
+
+window.Vue = Vue
 window.axios = require('axios');
 
 import * as GmapVue from 'gmap-vue'
