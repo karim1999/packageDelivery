@@ -93,7 +93,7 @@
                                     <select required id="countrySelect" name="country" class="form-control @error('country') is-invalid @enderror">
                                         <option disabled value="">Please select a Country</option>
                                         @foreach($countries as $country)
-                                            <option value="{{$country->id}}" {{old('country') == $country->id || ($address->country_id == $country->id) ? "selected": ""}}>{{$country->name}}</option>
+                                            <option value="{{$country->id}}" {{old('country') == $country->id }}>{{$country->name}}</option>
                                         @endforeach
                                     </select>
                                     @error('country')
@@ -104,7 +104,7 @@
                                     <label>State: </label>
                                     <select required id="stateSelect" name="state" class="form-control @error('state') is-invalid @enderror">
                                         @foreach($states as $state)
-                                            <option value="{{$state->id}}" {{old('state') == $state->id || ($address->state_id == $state->id) ? "selected": ""}}>{{$state->name}}</option>
+                                            <option value="{{$state->id}}" {{old('state') == $state->id }}>{{$state->name}}</option>
                                         @endforeach
                                     </select>
                                     @error('state')
@@ -117,7 +117,7 @@
                                 <div class="form-group">
                                     <label>City:</label>
                                     <input required type="text" class="form-control @error('city') is-invalid @enderror" name="city"
-                                           value="{{ old('city', $address->city) }}" placeholder="Enter city"/>
+                                           value="{{ old('city', '') }}" placeholder="Enter city"/>
                                     @error('city')
                                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                     @enderror
@@ -128,7 +128,7 @@
                                 <div class="form-group">
                                     <label>Address:</label>
                                     <input required type="text" class="form-control @error('address') is-invalid @enderror"
-                                           name="address" value="{{ old('address', $address->street) }}" placeholder="Enter address"/>
+                                           name="address" value="{{ old('address', '') }}" placeholder="Enter address"/>
                                     @error('address')
                                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                     @enderror
@@ -139,7 +139,7 @@
                                 <div class="form-group">
                                     <label>Postal Code:</label>
                                     <input required type="text" pattern="[0-9]{5}" class="form-control @error('postal_code') is-invalid @enderror"
-                                           name="postal_code" value="{{ old('postal_code', $address->postal_code) }}" placeholder="Enter postal code"/>
+                                           name="postal_code" value="{{ old('postal_code', '') }}" placeholder="Enter postal code"/>
                                     @error('postal_code')
                                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                     @enderror
@@ -153,8 +153,8 @@
                                 <gmap-map :center="center" :zoom="7" style="width: 100%; height: 500px">
                                     <gmap-marker :position="position" :clickable="true" :draggable="true" @dragend="gMapFunc($event.latLng)"></gmap-marker>
                                 </gmap-map>
-                                <input id="latitudeInput" type="hidden" required style="display: none" name="latitude" v-model="position.lat" value="{{ old('latitude', $address->latitude) }}">
-                                <input id="longitudeInput" type="hidden" required style="display: none" name="longitude" v-model="position.lng" value="{{ old('longitude', $address->longitude) }}">
+                                <input id="latitudeInput" type="hidden" required style="display: none" name="latitude" v-model="position.lat" value="{{ old('latitude', '') }}">
+                                <input id="longitudeInput" type="hidden" required style="display: none" name="longitude" v-model="position.lng" value="{{ old('longitude', '') }}">
                             </div>
                         </div>
 
