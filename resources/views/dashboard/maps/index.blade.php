@@ -84,7 +84,7 @@
                 </div>
                 <div class="list-group">
 
-                  <button type="button" class="list-group-item list-group-item-action ">Add Package</button>
+                  <a href="/dashboard/package/create"><button type="button" class="list-group-item list-group-item-action ">Add Package</button></a>
                 </div>
               </div>
             </div>
@@ -133,7 +133,7 @@
                     <button type="button"  v-if= "driver.status == 'Busy'" class="list-group-item list-group-item-action ">@{{driver.name}}</button>
                   </div>
                 </div>
-                <button type="button" class="list-group-item list-group-item-action ">Add Driver</button>
+              <a href="/dashboard/driver/create">  <button type="button" class="list-group-item list-group-item-action ">Add Driver</button></a>
 
 
               </div>
