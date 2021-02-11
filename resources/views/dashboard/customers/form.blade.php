@@ -84,6 +84,8 @@
                         <div v-else class="form-group form-group-marginless">
                             <div class="form-group form-group-marginless">
                                 <label>Choose Address Type:</label>
+                                <type-input name="type" @set-value="setValue" default="{{old('type') ? old('type') : ( "Manual") }}" :options='@json($addressTypes)'></type-input>
+
                             </div>
                             <div class="separator separator-dashed my-5"></div>
 
